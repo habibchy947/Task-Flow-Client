@@ -39,6 +39,7 @@ const TasksBoards = () => {
     await axios.post('http://localhost:5000/tasks', newTask)
     .then(res => {
       console.log(res.data)
+      refetch()
       toast.success('Task Created')
       e.target.reset()
     })
