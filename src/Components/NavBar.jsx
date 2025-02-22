@@ -33,12 +33,12 @@ const NavBar = () => {
     }
     themeCheck()
     return (
-        <div className="navbar bg-gray-200 dark:bg-neutral px-10">
+        <div className="navbar bg-gray-200 dark:bg-neutral px-3 md:px-10">
             <div className="flex-1 gap-2">
                 <img className='h-9 w-9' src={logo} alt="" />
-                <h1 className=" text-3xl font-bold">TaskFlow</h1>
+                <h1 className="sm:text-3xl text-2xl font-bold">TaskFlow</h1>
             </div>
-            <div className="flex-none gap-3">
+            <div className="flex-none gap-1 sm:gap-3">
                 {/* swap theme */}
                 <label className="swap swap-rotate">
                     {/* this hidden checkbox controls the state */}
@@ -65,7 +65,7 @@ const NavBar = () => {
                     </svg>
                 </label>
                 {/* logout btn */}
-                <button onClick={handleLogOut} className='btn bg-pink-400 border-none font-semibold text-white'>LogOut</button>
+                <button onClick={handleLogOut} className='btn btn-sm sm:btn-md bg-pink-400 border-none font-semibold text-white'>LogOut</button>
                 {/* avatar */}
                 <div className="">
                     <div className="avatar">

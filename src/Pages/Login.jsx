@@ -4,24 +4,43 @@ import { FcGoogle } from 'react-icons/fc';
 import { AuthContext } from '../Provider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 const Login = () => {
-    const {googleLogin} = useContext(AuthContext)
+    const { googleLogin, user } = useContext(AuthContext)
     const navigate = useNavigate()
+    if(user){
+        navigate('/home')
+    }
     const handleGoogle = (e) => {
         e.preventDefault()
         googleLogin()
-        .then(result => {
-            console.log(result.user)
-            toast.success('You are logged in successfully. Enjoy your session')
-            navigate('/home')
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(result => {
+                console.log(result.user)
+                // user saved to DB
+                const userInfo = {
+                    userId: result.user.uid,
+                    email: result.user.email,
+                    name: result.user?.displayName
+                }
+
+                axios.post('http://localhost:5000/user', userInfo)
+                    .then(res => {
+                        console.log(res.data)
+                    })
+                    .catch(err => {
+                        console.log(err.response?.message || 'An error occurred')
+                    })
+
+                toast.success('You are logged in successfully. Enjoy your session')
+                navigate('/home')
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
     return (
         <div className='flex justify-center items-center min-h-screen'>
-            <div className='border flex flex-col justify-center items-center rounded-sm p-6 text-center'>
+            <div className='border shadow-lg flex flex-col justify-center items-center rounded-sm p-6 text-center'>
                 <img className='h-14 w-14 mb-4' src={logo} alt="" />
                 <h1 className='text-3xl mb-2 font-semibold'>TaskFlow</h1>
                 <div className="divider py-0 my-0"></div>
