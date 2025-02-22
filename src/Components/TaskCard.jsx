@@ -14,19 +14,16 @@ const TaskCard = ({ task, refetch, isLoading }) => {
 
     // delete
     const handleDeleteOrder = async (id) => {
-        console.log(id)
         try {
-            const { data } = await axios.delete(`http://localhost:5000/tasks/${id}`)
+            const { data } = await axios.delete(`https://task-flow-server-six.vercel.app/tasks/${id}`)
             refetch()
-            console.log(data)
             toast.success('Task deleted successfully')
         } catch (err) {
-            console.log(err)
+            // console.log(err)
             toast.error(err.message)
         }
     }
     const deleteConfirmation = (id) => {
-        console.log(id)
         toast(t => (
             <div className='flex gap-3 items-center'>
                 <div>
@@ -52,7 +49,7 @@ const TaskCard = ({ task, refetch, isLoading }) => {
     // modal function
     const handleModal = async (id) => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/singleTasks/${id}`)
+            const { data } = await axios.get(`https://task-flow-server-six.vercel.app/singleTasks/${id}`)
             setSingleTask(data)
             setIsModalOpen(true);
         } catch (err) {
@@ -75,7 +72,7 @@ const TaskCard = ({ task, refetch, isLoading }) => {
         }
         // console.log(food)
 
-        axios.put(`http://localhost:5000/tasks/${singleTask._id}`, updatedTask)
+        axios.put(`https://task-flow-server-six.vercel.app/tasks/${singleTask._id}`, updatedTask)
             .then(res => {
                 // console.log(res.data)
                 if (res.data.modifiedCount) {
@@ -93,10 +90,7 @@ const TaskCard = ({ task, refetch, isLoading }) => {
             isDragging: !!monitor.isDragging()
         })
     }))
-    //   Hide default drag preview (fixes viewport issue)
-    // useEffect(() => {
-    //     preview(getEmptyImage(), { captureDraggingState: true });
-    // }, [preview]);
+   
 
     if (isLoading) {
         return <p>Loading...</p>

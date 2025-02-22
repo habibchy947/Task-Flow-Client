@@ -16,11 +16,11 @@ const Column = ({category, tasks, refetch, isLoading}) => {
           }))
         
           const addItemToSection = async (id) => {
-              const {data} = await axios.put(`http://localhost:5000/dragTask/${id}`, {category})
+              const {data} = await axios.put(`https://task-flow-server-six.vercel.app/dragTask/${id}`, {category})
               refetch()
 
               toast.success(`Task is ${category}` )
-              console.log(data)
+            //   console.log(data)
           }
     return (
         <div ref={drop} className={`border rounded-md shadow-md ${isOver ? 'bg-slate-100 dark:bg-slate-500' : ''}`}>

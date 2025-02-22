@@ -15,7 +15,7 @@ const Login = () => {
         e.preventDefault()
         googleLogin()
             .then(result => {
-                console.log(result.user)
+                // console.log(result.user)
                 // user saved to DB
                 const userInfo = {
                     userId: result.user.uid,
@@ -23,19 +23,19 @@ const Login = () => {
                     name: result.user?.displayName
                 }
 
-                axios.post('http://localhost:5000/user', userInfo)
+                axios.post('https://task-flow-server-six.vercel.app/user', userInfo)
                     .then(res => {
-                        console.log(res.data)
+                        // console.log(res.data)
                     })
                     .catch(err => {
-                        console.log(err.response?.message || 'An error occurred')
+                        // console.log(err.response?.message || 'An error occurred')
                     })
 
                 toast.success('You are logged in successfully. Enjoy your session')
                 navigate('/home')
             })
             .catch(err => {
-                console.log(err)
+                // console.log(err)
             })
     }
     return (

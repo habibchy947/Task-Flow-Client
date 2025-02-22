@@ -14,7 +14,7 @@ const TasksBoards = () => {
   const { data: tasks = [], refetch, isLoading } = useQuery({
     queryKey: ['tasks', user],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:5000/tasks/${user?.email}`)
+      const { data } = await axios.get(`https://task-flow-server-six.vercel.app/tasks/${user?.email}`)
       return data
     },
     enabled: true
@@ -36,11 +36,11 @@ const TasksBoards = () => {
       createdAt: new Date(),
       category: 'To-Do'
     }
-    console.log(newTask)
+    // console.log(newTask)
 
-    await axios.post('http://localhost:5000/tasks', newTask)
-      .then(res => {
-        console.log(res.data)
+    await axios.post('https://task-flow-server-six.vercel.app/tasks', newTask)
+      .then(() => {
+        // console.log(res.data)
         refetch()
         toast.success('Task Created')
         e.target.reset()
@@ -52,7 +52,7 @@ const TasksBoards = () => {
       <div className='px-10'>
           <CreateTask addTask={addTask}></CreateTask>
           <DndProvider backend={HTML5Backend}>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-10'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mt-10'>
             {
               categories.map((category, index) => <Column isLoading={isLoading} refetch={refetch} key={index} category={category} tasks={tasks}></Column>)
             }
