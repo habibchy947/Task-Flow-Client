@@ -5,11 +5,13 @@ import { AuthContext } from '../Provider/AuthProvider';
 import CreateTask from './CreateTask';
 import toast from 'react-hot-toast';
 import Column from './Column';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 const TasksBoards = () => {
   const { user } = useContext(AuthContext)
   const categories = ['To-Do', 'In-Progress', 'Done']
   // get all tasks
-  const { data: tasks = [], refetch } = useQuery({
+  const { data: tasks = [], refetch, isLoading } = useQuery({
     queryKey: ['tasks', user],
     queryFn: async () => {
       const { data } = await axios.get(`http://localhost:5000/tasks/${user?.email}`)
@@ -24,8 +26,8 @@ const TasksBoards = () => {
     e.preventDefault()
     const title = e.target.title.value
     const description = e.target.description.value
-    if(title.length > 50) return toast.error('Title must be less then or equal to 50 caharacter')
-    if(description.length > 200) return toast.error('Description must be less then or equal to 200 caharacter')
+    if (title.length > 50) return toast.error('Title must be less then or equal to 50 caharacter')
+    if (description.length > 200) return toast.error('Description must be less then or equal to 200 caharacter')
 
     const newTask = {
       email: user?.email,
@@ -37,23 +39,26 @@ const TasksBoards = () => {
     console.log(newTask)
 
     await axios.post('http://localhost:5000/tasks', newTask)
-    .then(res => {
-      console.log(res.data)
-      refetch()
-      toast.success('Task Created')
-      e.target.reset()
-    })
-    
+      .then(res => {
+        console.log(res.data)
+        refetch()
+        toast.success('Task Created')
+        e.target.reset()
+      })
+
   }
   return (
-    <div className='px-9'>
-        <CreateTask addTask={addTask}></CreateTask>
-        <div className='grid grid-cols-3 gap-5 mt-10'>
-        {
-          categories.map((category,index)=> <Column refetch={refetch} key={index} category={category} tasks={tasks}></Column>)
-        }
-        </div>
-    </div>
+    
+      <div className='px-10'>
+          <CreateTask addTask={addTask}></CreateTask>
+          <DndProvider backend={HTML5Backend}>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-10'>
+            {
+              categories.map((category, index) => <Column isLoading={isLoading} refetch={refetch} key={index} category={category} tasks={tasks}></Column>)
+            }
+          </div>
+          </DndProvider>
+      </div>
   );
 };
 

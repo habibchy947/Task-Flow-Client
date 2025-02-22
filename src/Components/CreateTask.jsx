@@ -9,17 +9,17 @@ const CreateTask = ({ addTask }) => {
                     type="text"
                     name='title'
                     placeholder="Task title"
-                    className="w-full mb-2 p-2 border rounded"
+                    className="w-full mb-2 p-2 dark:bg-gray-600 dark:text-white border rounded"
                     required
                 />
                 <textarea
                     name='description'
                     placeholder="Description"
-                    className="w-full mb-2 p-2 border rounded"
+                    className="w-full mb-2 p-2 dark:bg-gray-600 dark:text-white border rounded"
                     required
                 />
                 <button
-                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                    className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600"
                 >
                     Add Task
                 </button>
